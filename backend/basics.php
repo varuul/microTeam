@@ -13,6 +13,7 @@
 		$q = preg_replace($patterns, $replacements , $Query);
 		return $q;
 	}
+	
 	function DB_GetDate() {
 		$q_timestamp = "SELECT UTC_TIMESTAMP";
 		$res = mysql_query($q_timestamp);
@@ -20,11 +21,20 @@
 		$dbNOW = $sqldate[0];
 		return $dbNOW;
 	}
+	
 	function DB_Connect() {
 		$_CFG = $_SESSION["CFG"];
-		$dblink = mysql_connect ($_CFG["db_server"],$_CFG["db_username"],$_CFG["db_password"]);
-		if (!$dblink) return false;
-		$db = mysql_select_db ($_CFG["db_name"], $dblink);
+		$dblink = mysql_connect($_CFG["db_server"],$_CFG["db_username"],$_CFG["db_password"]);
+		if (!$dblink) {
+			/*
+			echo "SHIT! no db\r\n";
+			echo "s:".$_CFG["db_server"]."\r\n";
+			echo "s:".$_CFG["db_username"]."\r\n";
+			echo "s:".$_CFG["db_password"]."\r\n";
+			*/
+			return false;
+		}
+		$db = mysql_select_db($_CFG["db_name"], $dblink);
 		if (!$db) return false;
 		$_SESSION["DB_LINK"] = $dblink;
 		return $db;

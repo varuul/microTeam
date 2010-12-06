@@ -29,6 +29,8 @@
 
 <!--    ############ MICROTEAM FUNCTIONS ##############################################################################       //-->
 		<script type="text/javascript" language="javascript" src="./js/microteam.js"></script>
+<!--    ############ CONSOLE FUNCTIONS ##############################################################################       //-->
+		<script type="text/javascript" language="javascript" src="./js/console.js"></script>
 		
 		
 <!--    ############ JS FUNCTIONS ##############################################################################       //-->
@@ -40,7 +42,36 @@
 		</script>
 	</head>
 	<body id="microTEAM__body" class="css__Background">
-		
+		<!--    ############ to allow autofilling, the form must be present at loadtime ##########################################       //-->
+		<div id="hider_001" style="display:block;position:absolute;top:-10000;left:-10000;overflow:hidden;width:10px;height:10px">
+			<iframe id="HiddenIFrame_01">
+			</iframe>
+			<div id="LoginPanel__ContainerDiv">
+				<form id="LOGINDIALOG__form" target="HiddenIFrame_01" action="/backend/logindummy.php" method="post">
+					<table id="LOGINDIALOG__table" class="css__LoginPanelTable">
+						<tr>
+							<td class="to_be_localized" localizefill="@#LOGINDIALOG__PreText_Username#@">
+								
+							</td>
+							<td>
+								<input name="username" id="LOGINDIALOG__input_username" type="text" size="20"></input>
+							</td>
+						</tr>
+						<tr>
+							<td class="to_be_localized" localizefill="@#LOGINDIALOG__PreText_Password#@">
+							</td>
+							<td>
+								<input name="password" id="LOGINDIALOG__input_password" type="password" size="20"></input>
+							</td>
+							<td rowspan="2" valign="middle">
+								<button id="LOGINDIALOG__button_login" onclick="USER__login();" class="to_be_localized" localizefill="@#LOGINDIALOG__ButtonText_Login#@"></button>
+								<button style="display:none;" type="submit" id="LOGINDIALOG__button_HiddenSubmit"></button>
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
 	</body>
 </html>
 	

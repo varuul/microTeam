@@ -8,53 +8,55 @@
 	
 	require_once("bootstrap.php");
 	
-	$Session = Session__FindInDB(session_id());
-	
-	if ($Session == false) {
-		$_SESSION[$bid]["REPLY"]["DB_Session"] = "false";
-		array_push($_SESSION[$bid]["REPLY"]["ERRORS"], "messages can only be accessed by logged in users");
-		$_SESSION[$bid]["REPLY"]["jobresult"] = "false";
-		Quit();
-	} else {
-		$_SESSION[$bid]["REPLY"]["DB_Session"] = "true";
-	}
-	$job = $_POST["job"];
-	
-	if ($job == "messages" AND isset($_POST["msg_command"]) AND strlen($_POST["msg_command"])>2) {
-		$possiblecommands = array("get","add");
-		$cmd = $_POST["msg_command"];
-		if (!in_array($cmd,$possiblecommands)) {
-			array_push($_SESSION[$bid]["REPLY"]["ERRORS"], "unknown messages command");
+	function Messages__basic() {
+		GLOBAL $bid;
+		$Session = Session__FindInDB(session_id());
+		
+		if ($Session == false) {
+			$_SESSION[$bid]["REPLY"]["DB_Session"] = "false";
+			array_push($_SESSION[$bid]["REPLY"]["ERRORS"], "messages can only be accessed by logged in users");
 			$_SESSION[$bid]["REPLY"]["jobresult"] = "false";
 			Quit();
+		} else {
+			$_SESSION[$bid]["REPLY"]["DB_Session"] = "true";
 		}
-		array_push($_SESSION[$bid]["REPLY"]["SUCCESSES"], "message command triggered");
-		if ($cmd=="get") {
-			$mode = $_POST["msg_getmode"];
-			$since = $_POST["msg_since"];
-			$messages = Messages_getNew($mode, $since, $since);
-			array_push($_SESSION[$bid]["REPLY"]["MESSAGES"], $messages);
-			array_push($_SESSION[$bid]["REPLY"]["SUCCESSES"], "messages collected");
-			$_SESSION[$bid]["REPLY"]["jobresult"] = "true";
-		} else if ($cmd=="add") {
-			$content = $_POST["msg_content"];
-			$userid = $_SESSION[$bid]["user_id"];	
-			$add = Messages_add($userid, $content);
-			if ($add == false) {
-				array_push($_SESSION[$bid]["REPLY"]["ERRORS"], "message add failed");
+		$job = $_POST["job"];
+		
+		if ($job == "messages" AND isset($_POST["msg_command"]) AND strlen($_POST["msg_command"])>2) {
+			$possiblecommands = array("get","add");
+			$cmd = $_POST["msg_command"];
+			if (!in_array($cmd,$possiblecommands)) {
+				array_push($_SESSION[$bid]["REPLY"]["ERRORS"], "unknown messages command");
 				$_SESSION[$bid]["REPLY"]["jobresult"] = "false";
-			} else {
-				array_push($_SESSION[$bid]["REPLY"]["SUCCESSES"], "message added");
-				$_SESSION[$bid]["REPLY"]["jobresult"] = "true";
+				Quit();
 			}
+			array_push($_SESSION[$bid]["REPLY"]["SUCCESSES"], "message command triggered");
+			if ($cmd=="get") {
+				$mode = $_POST["msg_getmode"];
+				$since = $_POST["msg_since"];
+				$messages = Messages_getNew($mode, $since, $since);
+				array_push($_SESSION[$bid]["REPLY"]["MESSAGES"], $messages);
+				array_push($_SESSION[$bid]["REPLY"]["SUCCESSES"], "messages collected");
+				$_SESSION[$bid]["REPLY"]["jobresult"] = "true";
+			} else if ($cmd=="add") {
+				$content = $_POST["msg_content"];
+				$userid = $_SESSION[$bid]["user_id"];	
+				$add = Messages_add($userid, $content);
+				if ($add == false) {
+					array_push($_SESSION[$bid]["REPLY"]["ERRORS"], "message add failed");
+					$_SESSION[$bid]["REPLY"]["jobresult"] = "false";
+				} else {
+					array_push($_SESSION[$bid]["REPLY"]["SUCCESSES"], "message added");
+					$_SESSION[$bid]["REPLY"]["jobresult"] = "true";
+				}
+			}
+		} else {
+			array_push($_SESSION[$bid]["REPLY"]["ERRORS"], "bad messages command");
+			$_SESSION[$bid]["REPLY"]["jobresult"] = "false";
 		}
-	} else {
-		array_push($_SESSION[$bid]["REPLY"]["ERRORS"], "bad messages command");
-		$_SESSION[$bid]["REPLY"]["jobresult"] = "false";
+		Quit();
+	
 	}
-	Quit();
-	
-	
 	
 	// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

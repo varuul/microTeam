@@ -1,9 +1,10 @@
 <?php
 	$_SESSION["CFG"] = array(
 		'tables' => array(
-			'users' => 'users',
-			'sessions' => 'sessions',
-			'info' => 'info'
+			'users' => 'microteam_users',
+			'sessions' => 'microteam_sessions',
+			'info' => 'microteam_info',
+			'messages' => 'microteam_messages',
 		),
 		'sessiontable_fields' => array(
 			'session_id' => 'session_id',
@@ -17,6 +18,8 @@
 			'password' => 'password',
 			'created_date' => 'created_date'
 		),
+		
+		
 		// THE INFOTABLE is a new way to organize data. with pure association, a thing and content
 		// this makes the system much more flexible, and probably a bit faster, but - of course nothing is for free - this system makes it necessary to adapt DB-queries constantly
 		// hence, here is a list of THINGS and CONTENS that are integrated
@@ -30,8 +33,16 @@
 			'thing' => 'thing',
 			'content' => 'content'
 		),
+		
 		'PossibleJobs' => array(
-			'login','logout','hello','console'
+			'login','logout','hello','console', 'messages'
+		),
+		
+		'messagestable_fields' => array(
+			'msg_id' => 'msg_id',
+			'sender_user_id' => 'sender_user_id',
+			'msg_content' => 'msg_content',
+			'msg_created_date' => 'msg_created_date'
 		)
 	);
 	$_SESSION["CFG"]['db_name'] = '';

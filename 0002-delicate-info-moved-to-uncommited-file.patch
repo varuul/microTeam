@@ -1,0 +1,70 @@
+From c7dd42c7c4f891db75d0f6f97ea5d346d1a6b404 Mon Sep 17 00:00:00 2001
+From: varuul <varuul@cyrap.de>
+Date: Sat, 4 Dec 2010 16:30:06 +0100
+Subject: [PATCH] delicate info moved to uncommited file
+
+---
+ backend/config.php |   32 ++++++++++----------------------
+ 1 files changed, 10 insertions(+), 22 deletions(-)
+
+diff --git a/backend/config.php b/backend/config.php
+index 78f92a9..b0aa1b7 100644
+--- a/backend/config.php
++++ b/backend/config.php
+@@ -1,14 +1,9 @@
+ <?php
+ 	$_SESSION["CFG"] = array(
+-		'db_name' => 'microteam',
+-		'db_server' => '127.0.0.1',
+-		'db_username' => 'root',
+-		'db_password' => 'forever',
+ 		'tables' => array(
+-			'users' => 'microteam_users',
+-			'sessions' => 'microteam_sessions',
+-			'info' => 'microteam_info',
+-			'messages' => 'microteam_messages',
++			'users' => 'users',
++			'sessions' => 'sessions',
++			'info' => 'info'
+ 		),
+ 		'sessiontable_fields' => array(
+ 			'session_id' => 'session_id',
+@@ -22,8 +17,6 @@
+ 			'password' => 'password',
+ 			'created_date' => 'created_date'
+ 		),
+-		
+-		
+ 		// THE INFOTABLE is a new way to organize data. with pure association, a thing and content
+ 		// this makes the system much more flexible, and probably a bit faster, but - of course nothing is for free - this system makes it necessary to adapt DB-queries constantly
+ 		// hence, here is a list of THINGS and CONTENS that are integrated
+@@ -37,18 +30,13 @@
+ 			'thing' => 'thing',
+ 			'content' => 'content'
+ 		),
+-		
+ 		'PossibleJobs' => array(
+-			'login','logout','hello','console', 'messages'
+-		),
+-		
+-		'messagestable_fields' => array(
+-			'msg_id' => 'msg_id',
+-			'sender_user_id' => 'sender_user_id',
+-			'msg_content' => 'msg_content',
+-			'msg_created_date' => 'msg_created_date'
+-		),
+-		
+-		
++			'login','logout','hello','console'
++		)
+ 	);
++	$_SESSION["CFG"]['db_name'] = '';
++	$_SESSION["CFG"]['db_server'] = '';
++	$_SESSION["CFG"]['db_username'] = '';
++	$_SESSION["CFG"]['db_password'] = '';
++	require("xs.php");
+ ?>
+\ No newline at end of file
+-- 
+1.6.0.2
+

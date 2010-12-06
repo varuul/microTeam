@@ -49,6 +49,7 @@ function SideDock_menu() {
 		MenuLevel: 0
 	}
 	thismenu.buttons_add(ConsoleButton);
+	
 	var LogButton = {
 		id:"Button__Log",
 		click: function(e) { 

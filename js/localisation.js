@@ -1,5 +1,5 @@
 localized_text = {
-	en: {
+	"en": {
 		yes: "yes",
 		no: "no",
 		session: "session",

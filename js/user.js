@@ -1,4 +1,4 @@
- function USER__login() {
+function USER__login() {
 	var postinfo = {};	// generate an object to pass via POST
 	postinfo.job = "login";		// this is passed to tell the serverside php what we want to do
 	postinfo.browserID = myBrowser.id;  // with this we ID our script instance for the server...

@@ -1,6 +1,7 @@
 <?php
 	function Session__FixABrowser($bid) {
 		global $dbNOW;
+		global $bid;
 		$_SESSION[$bid] = array();
 		$_SESSION[$bid]["REPLY"] = array();
 		$_SESSION[$bid]["FirstContact"] = $dbNOW;

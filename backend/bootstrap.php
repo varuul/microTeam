@@ -40,7 +40,7 @@
 		}
 		$err .= "</errorentry>\n\n";
 		echo $err;
-		print_r($_SESSION);
+		//print_r($_SESSION);
 		return false;
 	}
 // ######################################### END OF MASSIVE ERROR REPORTING FOR ERROR FINDING DURING DEVELOPMENT ############
@@ -49,20 +49,19 @@
 	
 	session_start();
 	
-	//imports some basic php functions
-	require_once("basics.php");
 	// DEFINES $_CFG
 	require_once("config.php");
 	// DEFINES $_QU
 	require_once("db_queries.php");
+	//imports some basic php functions
+	require_once("basics.php");
 	// adds SESSION functionalities
 	require_once("session.php");
-	
-	// adds specific microteam functionalities
-	require_once("microteam.php");
-	
+
 	$_SESSION["DB"] = DB_connect();
 
+	
+	
 	date_default_timezone_set('UTC');
 	
 	$t = mysql_query("SET NAMES 'utf8'"); 
@@ -94,7 +93,13 @@
 	$_SESSION[$bid]["REPLY"]["now"] = $dbNOW;
 	$_SESSION[$bid]["now"] = $dbNOW;
 	
-	Messages_work();
+	//Messages_work();
+	if (function_exists('Messages__basic')) {
+		Messages__basic();
+	}
+	if (function_exists('User__basic')) {
+		User__basic();
+	}
 	
 	// #####################################################################
 	

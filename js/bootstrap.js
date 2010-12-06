@@ -1,20 +1,18 @@
+/**
+ * Starts the engines. everything that needs to be initialized should go here.
+ * Basic global variables are set up here:
+ * myBrowser - @see BrowserInstance
+ * mySurveillance - @see aSurveillance
+ * to add independent plugins and initiate them @see aPlugin function for more info
+ *
+ * @return true :)
+ */
+
 function bootstrap_1() {  // FIRE UP THE ENGINES!
 	
 	//this object holds all the general variables and information
 	myBrowser = new BrowserInstance();
 
-	// we need this fellow for enabling the browsers' autocomplete thing and potentially for more workarounds later on...
-	HiddenIframe__create();
-	
-	// CREATE the login-Panel
-	loadHTML(myBrowser.URL_html+"login_dialog.html",function(html_ID) {
-			var myhtml = localize(myBrowser.loadedhtml[html_ID].data);
-			var myDialogID = Dialog_build(localized_text[myBrowser.language]["LOGINDIALOG__HeaderText"],myhtml);
-			$("#"+myDialogID).dialog({autoOpen:false, width:"auto", resizable: false, modal: true});
-			myBrowser.LoginPanel = $("#"+myDialogID);
-		},false);
-	
-	
 	// ################################################################################
 	// ################################################################################
 	// ###############		the SURVEILLANCE STARTS HERE								############################
@@ -25,57 +23,36 @@ function bootstrap_1() {  // FIRE UP THE ENGINES!
 	mySurveillance = new aSurveillance();
 	mySurveillance.interval = 100;
 	setTimeout("mySurveillance.runChecks();",mySurveillance.interval);
-
-	setTimeout("checkSurveillance();",15000);
+	setTimeout("checkSurveillance();",15000);  // we do that to have 2 instances constanly checking 
+	setTimeout("checkSurveillance();",22000);  //
 
 	// CREATE the side-docked menu
 	myBrowser.menu = SideDock_menu();
 	myBrowser.menu.updateButtonVisibility();
 	
+	// initiate the LoginPanel
+	myBrowser.LoginPanel = $("#LoginPanel__ContainerDiv").dialog( {
+		autoOpen : false,
+		closeOnEscape : true,
+		title: function() { 
+			var a = localize("@#LOGINDIALOG__HeaderText#@"); 
+			return a; 
+		}
+	} );
+	
 	// Run initialisation of Plugins that registered with the system
 	myPlugins.initPlugins();
 	
-	// init new menu type
-	/*myTopSlide = new FrameSlide("TopSlide");
-	$(myTopSlide.label).html("<img src='"+myBrowser.URL_images+"menu_top.png'>");
-	var FilterHTML = "<div>define your FILTER:<br><textarea id='FilterText' rows=4 cols=40'></textarea></div>"
-	var SortHTML = "<div>define your SORTER:<br><textarea id='SortText' rows=2 cols=40'></textarea></div>"
-	*/
-	
-	//myTopSlide.content(FilterHTML+SortHTML);
-	
-	
-	// init new navi slide
-	//myNaviSlide = new GrowSlide("NaviSlide");
-	//$(myNaviSlide.label).html("<img src='"+myBrowser.URL_images+"menu_top.png'>");
-	
-	
 	// start talking to the server, say hello, ask for a still-open session and so on...
 	AJAX__SessionCheck();
+
+	// this will fill localized texts into the html objects identified by the .to_be_localized class
+	$(".to_be_localized").each(function(i,val) { 
+		var b = $(val).attr("localizefill"); 
+		var a = localize(b); 
+		$(val).html(a); 
+	});
 	
 	return true;
 }
 
-
-function HiddenIframe__create() {
-	var IFcontainer = document.createElement("div");
-	$(IFcontainer).addClass("css__HiddenContainer");
-	$(IFcontainer).attr("id","HiddenIFrameContainer");
-	$("body").append(IFcontainer);
-	var IFrame = document.createElement("iframe");
-	$(IFrame).attr("id","HiddenIFrame_01");
-	$(IFrame).attr("src","");
-	$(IFrame).attr("name","HiddenIFrame_01");
-	$(IFrame).css("visibility","hidden");
-	$(IFcontainer).append(IFrame);
-	return true;
-}
-
-function checkSurveillance() {
-	var dateNow = new Date();
-	var myNow = Date.parse(dateNow)
-	if (myNow >mySurveillance.lastcheck + mySurveillance.interval) {	
-		setTimeout("mySurveillance.runChecks();",mySurveillance.interval);
-	}
-	setTimeout("checkSurveillance();",15000);
-}

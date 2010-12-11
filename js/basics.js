@@ -171,6 +171,7 @@ function loadHTML(html_url,callback,ForceReload,keepLineBreaks) {
 function log(text) {
 	if (myBrowser.log == undefined) myBrowser.log = new logObject();
 	myBrowser.log.add(text);
+	console.log(text);
 	return myBrowser.log.len();
 }
 

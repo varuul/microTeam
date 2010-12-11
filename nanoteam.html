@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<title>nanoTEAM - textual team management</title>
+		<meta http-equiv="expires" content="Sat, 1 Jan 2000 05:00:00 GMT">
+		<!--    jQ     ;)  //-->
+		<script type="text/javascript" language="javascript" src="./js/jquery-1.4.2.min.js"></script>
+		<script type="text/javascript" src="./js/jquery-ui-1.8.2.custom.min.js"></script>
+		<link type="text/css" href="./css/blitzer/jquery-ui-1.8.2.custom.css" rel="stylesheet" />	
+
+<!--    ############ BASIC FRAMEWORK STUFF##############################################################################       //-->		
+		<script type="text/javascript" language="javascript" src="./js/jquery.md5.js"></script>
+		
+		<script type="text/javascript" language="javascript" src="./js/basics.js"></script>
+		<script type="text/javascript" language="javascript" src="./js/nanoteam_browser.js"></script>
+		<script type="text/javascript" language="javascript" src="./js/localisation.js"></script>
+		<script type="text/javascript" language="javascript" src="./js/nanoteam_init.js"></script>
+		<script type="text/javascript" language="javascript" src="./js/nanoteam.js"></script>
+		
+		<script type="text/javascript" language="javascript" src="./js/surveillance.js"></script>		
+		<script type="text/javascript" language="javascript" src="./js/ButtonSlide.js"></script>
+		<script type="text/javascript" language="javascript" src="./js/plugins.js"></script>
+				<script type="text/javascript" language="javascript" src="./js/jStatusNet.js"></script>
+		
+		<link type="text/css" href="./css/basics.css" rel="stylesheet" />	
+		<link type="text/css" href="./css/nanoteam.css" rel="stylesheet" />	
+
+<!--    ############ JS FUNCTIONS ##############################################################################       //-->
+		
+		<script type="text/javascript" language="JavaScript">
+			$(document).ready(function() {
+				init_stage1 = bootstrap_1();
+			});
+		</script>
+	</head>
+	<body id="nanoTEAM__body" class="css__Background">
+		<!--    ############ to allow autofilling, the form must be present at loadtime ##########################################       //-->
+		<div id="hider_001" style="display:block;position:absolute;top:-10000;left:-10000;overflow:hidden;width:10px;height:10px">
+			<iframe id="HiddenIFrame_01">
+			</iframe>
+			<div id="LoginPanel__ContainerDiv">
+				<form id="LOGINDIALOG__form" target="HiddenIFrame_01" action="/backend/logindummy.php" method="post">
+					<table id="LOGINDIALOG__table" class="css__LoginPanelTable">
+						<tr>
+							<td class="to_be_localized" localizefill="@#LOGINDIALOG__PreText_Username#@">
+								
+							</td>
+							<td>
+								<input name="username" id="LOGINDIALOG__input_username" type="text" size="20"></input>
+							</td>
+						</tr>
+						<tr>
+							<td class="to_be_localized" localizefill="@#LOGINDIALOG__PreText_Password#@">
+							</td>
+							<td>
+								<input name="password" id="LOGINDIALOG__input_password" type="password" size="20"></input>
+							</td>
+							<td rowspan="2" valign="middle">
+								<button type="submit" id="LOGINDIALOG__button_login" onclick="USER__login();" class="to_be_localized" localizefill="@#LOGINDIALOG__ButtonText_Login#@"></button>
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>
+	
